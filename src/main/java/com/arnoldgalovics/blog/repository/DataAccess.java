@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -54,5 +55,25 @@ public class DataAccess {
     @Transactional
     public Company getCompanyJPQLFetch(final UUID id) {
         return entityManager.createQuery("FROM Company c JOIN FETCH c.products", Company.class).getSingleResult();
+    }
+
+    @Transactional
+    public void deleteEntities() {
+        deleteProducts();
+        deleteCompanies();
+    }
+
+    private void deleteCompanies() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<Company> cd = cb.createCriteriaDelete(Company.class);
+        cd.from(Company.class);
+        entityManager.createQuery(cd).executeUpdate();
+    }
+
+    private void deleteProducts() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<Product> cd = cb.createCriteriaDelete(Product.class);
+        cd.from(Product.class);
+        entityManager.createQuery(cd).executeUpdate();
     }
 }

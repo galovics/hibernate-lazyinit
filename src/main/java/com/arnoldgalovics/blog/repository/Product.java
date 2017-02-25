@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-@Access(AccessType.FIELD)
 public class Product {
     @Id
     private UUID id;

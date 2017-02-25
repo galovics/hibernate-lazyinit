@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-@Access(AccessType.FIELD)
 public class Company {
     @Id
     private UUID id;
